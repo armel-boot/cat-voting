@@ -1,95 +1,84 @@
-import Image from "next/image";
-import styles from "./page.module.css";
+"use client";
 
-export default function Home() {
+import { useEffect, useState } from "react";
+import styles from "../app/vote/vote.module.css";
+import { useRouter } from "next/navigation";
+
+interface ImageData {
+  url: string;
+  id: string;
+}
+
+export default function VotePage() {
+  const [images, setImages] = useState<ImageData[]>([]);
+  const [currentPair, setCurrentPair] = useState<ImageData[]>([]);
+  const [votes, setVotes] = useState<{ [key: string]: number }>({});
+  const router = useRouter();
+
+  useEffect(() => {
+    async function fetchData() {
+      const response = await fetch("/images.json");
+      const data = await response.json();
+      setImages(data.images);
+      const storedVotes = localStorage.getItem("votes");
+      setVotes(storedVotes ? JSON.parse(storedVotes) : {});
+      selectRandomPair(data.images);
+    }
+    fetchData();
+  }, []);
+
+  function selectRandomPair(allImages: ImageData[]) {
+    if (allImages.length < 2) return;
+    const shuffled = allImages.sort(() => 0.5 - Math.random());
+    setCurrentPair(shuffled.slice(0, 2));
+  }
+
+  const handleVote = (id: string) => {
+    const newVotes = { ...votes, [id]: (votes[id] || 0) + 1 };
+    setVotes(newVotes);
+    localStorage.setItem("votes", JSON.stringify(newVotes));
+    selectRandomPair(images);
+  };
+
+  const handleResults = () => {
+    router.push('/results');
+  };
+
+  if (currentPair.length < 2) {
+    return <div>Loading...</div>;
+  }
+
   return (
-    <main className={styles.main}>
-      <div className={styles.description}>
-        <p>
-          Get started by editing&nbsp;
-          <code className={styles.code}>app/page.tsx</code>
-        </p>
-        <div>
-          <a
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{" "}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className={styles.vercelLogo}
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
+    <div className={styles.container}>
+      <div className={styles.header}>
+        Cat Mash
+      </div>
+      <div className={styles.content}>
+        <div className={styles.section}>
+          {currentPair[0] && (
+            <>
+              <div className={styles.imageWrapper}>
+                <img src={currentPair[0].url} alt="Chat 1" className={styles.image} />
+              </div>
+              <button className={styles.voteButton} onClick={() => handleVote(currentPair[0].id)}>Vote</button>
+              <div className={styles.score}>Score: {votes[currentPair[0].id] || 0}</div>
+            </>
+          )}
+        </div>
+        <div className={styles.divider}></div>
+        <div className={styles.section}>
+          {currentPair[1] && (
+            <>
+              <div className={styles.imageWrapper}>
+                <img src={currentPair[1].url} alt="Chat 2" className={styles.image} />
+              </div>
+              <button className={styles.voteButton} onClick={() => handleVote(currentPair[1].id)}>Vote</button>
+              <div className={styles.score}>Score: {votes[currentPair[1].id] || 0}</div>
+            </>
+          )}
         </div>
       </div>
-
-      <div className={styles.center}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
-
-      <div className={styles.grid}>
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Docs <span>-&gt;</span>
-          </h2>
-          <p>Find in-depth information about Next.js features and API.</p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Learn <span>-&gt;</span>
-          </h2>
-          <p>Learn about Next.js in an interactive course with&nbsp;quizzes!</p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Templates <span>-&gt;</span>
-          </h2>
-          <p>Explore starter templates for Next.js.</p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Deploy <span>-&gt;</span>
-          </h2>
-          <p>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
-    </main>
+      <button className={styles.resultsButton} onClick={handleResults}>Voir les résultats</button>
+    </div>
   );
 }

@@ -1,0 +1,92 @@
+/* Styles pour la page des résultats */
+.container {
+    background: linear-gradient(to right, #7ecced, #8a2be2); /* Dégradé bleu et violet */
+    min-height: 100vh;
+    padding: 2rem;
+    color: black;
+    text-align: center;
+  }
+  
+  .header {
+    font-size: 2rem;
+    margin-bottom: 2rem;
+  }
+  
+  .tableContainer {
+    margin: 0 auto;
+    max-width: 1200px;
+    overflow-x: auto;
+  }
+  
+  .table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 2rem;
+  }
+  
+  .table th, .table td {
+    border: 1px solid #ddd;
+    padding: 1rem;
+    text-align: left;
+  }
+  
+  .table th {
+    background-color: #616a6b;
+    color: white;
+  }
+  
+  .table tr:nth-child(even) {
+    background-color: #f2f2f2;
+  }
+  
+  .table img {
+    max-width: 100px;
+    height: auto;
+  }
+  
+  .pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 2rem;
+  }
+  
+  .pageButton {
+    padding: 0.5rem 1rem;
+    border: 1px solid #ddd;
+    background-color: #4a4a4a;
+    color: white;
+    cursor: pointer;
+  }
+  
+  .pageButton:hover {
+    background-color: #666;
+  }
+  
+  .pageButtonDisabled {
+    background-color: #aaa;
+    cursor: not-allowed;
+  }
+  
+  .pageIndicator {
+    font-size: 1rem;
+    margin: 0 1rem;
+  }
+  
+  .homeButton {
+    position: fixed;
+    top: 1rem;
+    left: 1rem;
+    padding: 0.5rem 1rem;
+    background-color: #4a4a4a;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 0.25rem;
+  }
+  
+  .homeButton:hover {
+    background-color: #666;
+  }
+  
