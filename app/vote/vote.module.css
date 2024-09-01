@@ -2,27 +2,16 @@
     display: flex;
     flex-direction: column;
     height: 100vh;
-    background-color: #f0f0f0; /* Couleur de fond générale */
+    background: linear-gradient(to right,  #7ecced, #8a2be2) /* Couleur de fond générale */
   }
   
   .header {
     text-align: center;
     padding: 16px;
-    background-color: #c7d0d9;
-    color: #fff;
     font-size: 24px;
     font-weight: bold;
-  }
-  
-  .backButton {
-    margin: 16px;
-    padding: 8px 16px;
-    font-size: 16px;
-    background-color: #0070f3;
-    color: #fff;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
+    height: 3.5rem; 
+    background: linear-gradient(to right,  #7ecced, #8a2be2); /* Correspond à bg-gradient-to-r, from-cyan-500, to-blue-500 */    
   }
   
   .content {
@@ -37,6 +26,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    border-radius: 5%;
   }
   
   .imageWrapper {
@@ -44,15 +34,15 @@
   }
   
   .image {
-    max-width: 100%;
-    max-height: 70vh;
-    border-radius: 8px;
+    border-radius: 50%;   
+    width: 24rem;         
+    height: 24rem;
   }
   
   .voteButton {
     padding: 8px 16px;
     font-size: 16px;
-    background-color: #0070f3;
+    background: linear-gradient(to right,  #7ecced, #8a2be2);
     color: #fff;
     border: none;
     border-radius: 4px;
@@ -70,24 +60,26 @@
   }
   
   .section:nth-of-type(1) {
-    background-color: #e0f7fa; /* Couleur de fond pour le côté gauche */
+    background-color: #e1eef4; 
   }
   
   .section:nth-of-type(2) {
-    background-color: #ffe0b2; /* Couleur de fond pour le côté droit */
+    background-color: #fff5e7; /* Couleur de fond pour le côté droit */
   }
   
   .resultsButton {
-    position: absolute;
     bottom: 16px;
-    left: 50%;
-    transform: translateX(-50%);
-    padding: 12px 24px;
+    max-width: 400px;
+    padding: 12px;
     font-size: 18px;
-    background-color: #0070f3;
-    color: #fff;
+    font-weight: bold;
+    color: white;
+    background: linear-gradient(to right,  #7ecced, #8a2be2);
     border: none;
-    border-radius: 4px;
+    border-radius: 8px;
     cursor: pointer;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    align-self: center;
   }
   

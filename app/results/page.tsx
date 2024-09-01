@@ -1,8 +1,8 @@
-'use client';
+"use client";
 
-import { useEffect, useState } from 'react';
-import styles from './results.module.css';
-import { useRouter } from 'next/dist/client/components/navigation';
+import { useEffect, useState } from "react";
+import styles from "./results.module.css";
+import { useRouter } from "next/dist/client/components/navigation";
 
 interface ImageData {
   url: string;
@@ -11,9 +11,9 @@ interface ImageData {
 }
 
 const fetchImages = async () => {
-  const res = await fetch('/images.json');
+  const res = await fetch("/images.json");
   if (!res.ok) {
-    throw new Error('Failed to fetch');
+    throw new Error("Failed to fetch");
   }
   const data = await res.json();
   return data.images as ImageData[];
@@ -28,10 +28,10 @@ const ResultsPage = () => {
   useEffect(() => {
     const loadImages = async () => {
       const data = await fetchImages();
-      const updatedVotes = JSON.parse(localStorage.getItem('votes') || '{}');
+      const updatedVotes = JSON.parse(localStorage.getItem("votes") || "{}");
       const imagesWithVotes = data.map((image) => ({
         ...image,
-        votes: updatedVotes[image.id] || 0
+        votes: updatedVotes[image.id] || 0,
       }));
       setImages(imagesWithVotes);
     };
@@ -46,33 +46,31 @@ const ResultsPage = () => {
     setCurrentPage(page);
   };
 
+  const sortedVotes = currentImages.sort((a, b) => b.votes - a.votes);
+
   const totalPages = Math.ceil(images.length / itemsPerPage);
 
   return (
     <div className={styles.container}>
-      <button
-        className={styles.homeButton}
-        onClick={() => router.push('/')}
-      >
-        Retour à la page principale
-      </button>
       <h1 className={styles.header}>Results</h1>
       <div className={styles.tableContainer}>
         <table className={styles.table}>
           <thead>
             <tr>
-              <th>ID</th>
               <th>Image</th>
               <th>Votes</th>
             </tr>
           </thead>
           <tbody>
-            {currentImages.length > 0 ? (
-              currentImages.map((image) => (
+            {sortedVotes.length > 0 ? (
+              sortedVotes.map((image) => (
                 <tr key={image.id}>
-                  <td>{image.id}</td>
                   <td>
-                    <img src={image.url} alt={`Image ${image.id}`} className={styles.image} />
+                    <img
+                      src={image.url}
+                      alt={`Image ${image.id}`}
+                      className={styles.image}
+                    />
                   </td>
                   <td>{image.votes}</td>
                 </tr>
@@ -87,7 +85,9 @@ const ResultsPage = () => {
       </div>
       <div className={styles.pagination}>
         <button
-          className={`${styles.pageButton} ${currentPage === 1 ? styles.pageButtonDisabled : ''}`}
+          className={`${styles.pageButton} ${
+            currentPage === 1 ? styles.pageButtonDisabled : ""
+          }`}
           onClick={() => currentPage > 1 && handlePageChange(currentPage - 1)}
           disabled={currentPage === 1}
         >
@@ -97,18 +97,19 @@ const ResultsPage = () => {
           Page {currentPage} of {totalPages}
         </span>
         <button
-          className={`${styles.pageButton} ${currentPage === totalPages ? styles.pageButtonDisabled : ''}`}
-          onClick={() => currentPage < totalPages && handlePageChange(currentPage + 1)}
+          className={`${styles.pageButton} ${
+            currentPage === totalPages ? styles.pageButtonDisabled : ""
+          }`}
+          onClick={() =>
+            currentPage < totalPages && handlePageChange(currentPage + 1)
+          }
           disabled={currentPage === totalPages}
         >
           Next
         </button>
       </div>
-      <button
-        className={styles.homeButton}
-        onClick={() => router.push('/')}
-      >
-        Retour à la page principale
+      <button className={styles.homeButton} onClick={() => router.push("/")}>
+        Back to main page
       </button>
     </div>
   );

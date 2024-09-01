@@ -1,9 +1,8 @@
-/* Styles pour la page des résultats */
 .container {
     background: linear-gradient(to right, #7ecced, #8a2be2); /* Dégradé bleu et violet */
     min-height: 100vh;
     padding: 2rem;
-    color: black;
+    color: rgb(255, 252, 252);
     text-align: center;
   }
   
@@ -27,21 +26,21 @@
   .table th, .table td {
     border: 1px solid #ddd;
     padding: 1rem;
-    text-align: left;
+    text-align: center;
   }
   
   .table th {
-    background-color: #616a6b;
-    color: white;
+    background: linear-gradient(to right, #7ecced, #8a2be2);
   }
   
   .table tr:nth-child(even) {
-    background-color: #f2f2f2;
+    background: linear-gradient(to right, #7ecced, #8a2be2);
   }
   
   .table img {
-    max-width: 100px;
-    height: auto;
+    border-radius: 50%; 
+    width: 5rem;         
+    height: 5rem;
   }
   
   .pagination {
@@ -79,7 +78,7 @@
     top: 1rem;
     left: 1rem;
     padding: 0.5rem 1rem;
-    background-color: #4a4a4a;
+    background: linear-gradient(to right, #7ecced, #8a2be2);
     color: white;
     border: none;
     cursor: pointer;
